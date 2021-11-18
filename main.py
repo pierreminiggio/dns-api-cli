@@ -11,6 +11,11 @@ if len(args) != 2:
 
 sub_domain_name = args[1]
 ip_request = requests.get('https://api.ipify.org')
+
+if ip_request.status_code != 200:
+    print('IP API request failed')
+    sys.exit()
+
 current_ip = ip_request.text
 
 dns_api_request = requests.put(
@@ -24,4 +29,6 @@ dns_api_request = requests.put(
     }
 )
 
-print(dns_api_request.status_code)
+if dns_api_request.status_code != 204:
+    print('DNS API request failed')
+    sys.exit()
